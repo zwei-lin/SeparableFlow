@@ -145,8 +145,11 @@ class Logger:
         self.total_steps = 0
         self.running_loss = {}
         self.writer = None
+        self.time = time.time()
 
     def _print_training_status(self):
+        print('time: ',time.time()-self.time)
+        self.time = time.time()
         metrics_data = [self.running_loss[k]/SUM_FREQ for k in sorted(self.running_loss.keys())]
         training_str = "[{:6d}, {:10.7f}] ".format(self.total_steps+1, self.scheduler.get_last_lr()[0])
         metrics_str = ("{:10.4f}, "*len(metrics_data)).format(*metrics_data)
